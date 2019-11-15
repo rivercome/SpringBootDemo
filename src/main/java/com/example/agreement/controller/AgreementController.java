@@ -1,30 +1,60 @@
 package com.example.agreement.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.agreement.entity.Agreement;
+import com.example.agreement.service.AgreementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/agreement")
 public class AgreementController {
-    @RequestMapping(method = RequestMethod.POST, value = "/add")
-    public String add(@RequestParam("id") Integer id,
-                      @RequestParam("date") String date,
-                      @RequestParam("content") String content,
-                      @RequestParam("partya") Integer partya,
-                      @RequestParam("partyb") Integer partyb
+    /**
+     * 定义 service
+     */
+    @Autowired
+    private AgreementService service;
 
-    ){
-        return id + date + content + partya + partyb ;
+    /**
+     * 获取所有合同数
+     * @return
+     */
+    @RequestMapping(value = "/getAllAgreement", method = RequestMethod.GET)
+    public String getAllAgreement(){
+        return service.getAllAgreement();
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/edit")
-    public String edit(@RequestParam("content") String content,
-                       @RequestParam("editor") String editor,
-                       @RequestParam("editime") String editime,
-                       @RequestParam("id") Integer id
-                       ){
-        return  content+editor+editime+id;
+    /**
+     * 获取 合同id
+     * @param id 合同id
+     * @return
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Agreement getById(@PathVariable int id){
+        Agreement agreement = service.getById(id);
+        return agreement;
+    }
+
+    /**
+     * 新增合同
+     * @param agreement 合同
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    public int addAgre(Agreement agreement){
+        int res = service.addAgreement(agreement);
+        return res;
+    }
+
+    /**
+     * 修改合同
+     * @param agreement 合同
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/edit")
+    public int updateAgre(Agreement agreement){
+        System.out.println(agreement.getId());
+        int res = 0;
+        res = service.updateStu(agreement);
+        return res;
     }
 }
