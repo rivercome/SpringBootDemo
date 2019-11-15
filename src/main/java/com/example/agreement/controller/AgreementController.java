@@ -18,7 +18,7 @@ public class AgreementController {
      * 获取所有合同数
      * @return
      */
-    @RequestMapping(value = "/getAllAgreement", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = "/getAllAgreement")
     public String getAllAgreement(){
         return service.getAllAgreement();
     }
@@ -28,8 +28,8 @@ public class AgreementController {
      * @param id 合同id
      * @return
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Agreement getById(@PathVariable int id){
+    @RequestMapping(method = RequestMethod.GET, value = "getById")
+    public Agreement getById(int id){
         Agreement agreement = service.getById(id);
         return agreement;
     }
@@ -39,10 +39,10 @@ public class AgreementController {
      * @param agreement 合同
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/add")
-    public int addAgre(Agreement agreement){
-        int res = service.addAgreement(agreement);
-        return res;
+    @RequestMapping(method = RequestMethod.POST, value = "add")
+    public int addAgreement(Agreement agreement){
+        int response = service.addAgreement(agreement);
+        return response;
     }
 
     /**
@@ -50,11 +50,9 @@ public class AgreementController {
      * @param agreement 合同
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/edit")
-    public int updateAgre(Agreement agreement){
-        System.out.println(agreement.getId());
-        int res = 0;
-        res = service.updateStu(agreement);
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
+    public int updateAgreement(Agreement agreement){
+        int res = service.updateAgreement(agreement);
         return res;
     }
 }

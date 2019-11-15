@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property resource="log.properties"/>
+
+    <contextName>${APP_NAME}</contextName>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/all.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志每天进行rotate -->
+            <fileNamePattern>${LOG_DIR}/all-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        		<!-- 每个日志文件大小不超过2GB -->
+                        		<maxFileSize>2000MB</maxFileSize>
+                    		</timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+    </appender>
+
+    <appender name="all-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/all-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/all-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        		<!-- 每个日志文件大小不超过2GB -->
+                        		<maxFileSize>2000MB</maxFileSize>
+                    		</timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>[%date{yyyy-MM-dd HH:mm:ss.SSS}] %level [%mdc{invokeNo}] %C{0}:%line - %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="all"/>
+        <appender-ref ref="all-error"/>
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

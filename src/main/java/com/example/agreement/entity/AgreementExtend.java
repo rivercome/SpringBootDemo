@@ -1,6 +1,8 @@
 package com.example.agreement.entity;
 
-public class Agreement {
+import java.util.List;
+
+public class AgreementExtend {
     private Integer id;
     private Integer contrast_id;
     private String content;
@@ -9,19 +11,7 @@ public class Agreement {
     private String partyb;
     private String editor;
     private String editime;
-    public Agreement(){
-
-    }
-    public Agreement(Integer id,String content, String date, String partya, String partyb, String editor, String editime, Integer Cid){
-        this.id = id;
-        this.content = content;
-        this.date = date;
-        this.partya = partya;
-        this.partyb = partyb;
-        this.editime = editime;
-        this.editor = editor;
-        this.contrast_id = contrast_id;
-    }
+    private List<Agreement> orderList;
 
     public Integer getId() {
         return id;
@@ -85,5 +75,13 @@ public class Agreement {
 
     public void setEditime(String editime) {
         this.editime = editime;
+    }
+
+    public List<Agreement> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Agreement> orderList) {
+        this.orderList = orderList;
     }
 }

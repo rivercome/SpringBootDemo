@@ -32,6 +32,6 @@ public interface AgreementService {
      * @return
      */
 
-    int updateStu(Agreement agreement);
+    int updateAgreement(Agreement agreement);
 
 }
